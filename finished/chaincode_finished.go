@@ -58,7 +58,7 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 	
 	fmt.Println("invoke did not find func: " + function)
         if index == 3{
-            return nil, errors.New("index: " + index)
+            return nil, errors.New("index")
         }else{
             t.Invoke(stub, "init", args)	
         }

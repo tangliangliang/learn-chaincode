@@ -55,11 +55,7 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 	fmt.Println("invoke is running " + function)
         index = index +1
 	// Handle different functions
-	if function == "init" {
-		return t.Init(stub, "init", args)
-	} else if function == "write" {
-		return t.write(stub, args)
-	}
+	
 	fmt.Println("invoke did not find func: " + function)
         if index == 3{
             return nil, errors.New("Received unknown function invocation")

@@ -27,6 +27,8 @@ import (
 type SimpleChaincode struct {
 }
 
+var index=0
+
 func main() {
 	err := shim.Start(new(SimpleChaincode))
 	if err != nil {
@@ -51,7 +53,7 @@ func (t *SimpleChaincode) Init(stub *shim.ChaincodeStub, function string, args [
 // Invoke isur entry point to invoke a chaincode function
 func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args []string) ([]byte, error) {
 	fmt.Println("invoke is running " + function)
-
+        index = index +1
 	// Handle different functions
 	if function == "init" {
 		return t.Init(stub, "init", args)
@@ -59,8 +61,12 @@ func (t *SimpleChaincode) Invoke(stub *shim.ChaincodeStub, function string, args
 		return t.write(stub, args)
 	}
 	fmt.Println("invoke did not find func: " + function)
-
-	return nil, errors.New("Received unknown function invocation")
+        if index == 3{
+            return nil, errors.New("Received unknown function invocation")
+        }else{
+            t.Invoke(stub, "init", args)	
+        }
+	
 }
 
 // Query is our entry point for queries
